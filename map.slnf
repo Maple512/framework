@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "OneF.sln",
+    "projects": [
+      "map\\OneF.Mappable.Abstractions\\OneF.Mappable.Abstractions.csproj",
+      "map\\OneF.Mappable.Generator.Test\\OneF.Mappable.Generator.Test.csproj",
+      "map\\OneF.Mappable.Generator\\OneF.Mappable.Generator.csproj"
+    ]
+  }
+}

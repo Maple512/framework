@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "OneF.sln",
+    "projects": [
+      "event\\OneF.Eventable.Abstractions\\OneF.Eventable.Abstractions.csproj",
+      "event\\OneF.Eventable.Test\\OneF.Eventable.Test.csproj",
+      "event\\OneF.Eventable\\OneF.Eventable.csproj"
+    ]
+  }
+}

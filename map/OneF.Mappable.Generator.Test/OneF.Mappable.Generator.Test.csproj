@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../common.xunit.props" />
+
+  <PropertyGroup>
+    <TargetFramework>$(NetFramework)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OneF.Mappable.Generator\OneF.Mappable.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Verify.SourceGenerators" Version="1.4.0" />
+    <PackageReference Include="Verify.Xunit" Version="16.8.1" />
+  </ItemGroup>
+
+</Project>

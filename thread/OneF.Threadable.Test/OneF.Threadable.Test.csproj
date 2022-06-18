@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="../../common.xunit.props" />
+
+    <PropertyGroup>
+        <TargetFramework>$(NetFramework)</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\module\OneF.Moduleable.TestBase\OneF.Moduleable.TestBase.csproj" />
+        <ProjectReference Include="..\OneF.Threadable\OneF.Threadable.csproj" />
+    </ItemGroup>
+
+</Project>

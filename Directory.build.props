@@ -1,0 +1,19 @@
+<Project>
+
+  <PropertyGroup>
+    <RootName>OneF</RootName>
+
+    <!-- Net Version -->
+    <NetStandard>netstandard2.0</NetStandard>
+    <NetFramework>net6.0</NetFramework>
+
+    <!-- Microsoft Version -->
+    <MSVersion>6.0.0</MSVersion>
+    <MSMvcVersion>2.2.0</MSMvcVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <MainProjectPath>$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', 'main', '$(RootName)','$(RootName).csproj'))</MainProjectPath>
+  </PropertyGroup>
+
+</Project>

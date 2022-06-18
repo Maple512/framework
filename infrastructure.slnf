@@ -1,0 +1,15 @@
+{
+  "solution": {
+    "path": "OneF.sln",
+    "projects": [
+      "infrastructure\\OneF.Utilityable.Benchmark\\OneF.Utilityable.Benchmark.csproj",
+      "infrastructure\\OneF.Utilityable.Http.Test\\OneF.Utilityable.Http.Test.csproj",
+      "infrastructure\\OneF.Utilityable.Http\\OneF.Utilityable.Http.csproj",
+      "infrastructure\\OneF.Utilityable.Test\\OneF.Utilityable.Test.csproj",
+      "infrastructure\\OneF.Utilityable\\OneF.Utilityable.csproj",
+      "infrastructure\\OneF.Utilityable.Console\\OneF.Utilityable.Console.csproj",
+      "main\\OneF.Test\\OneF.Test.csproj",
+      "main\\OneF\\OneF.csproj"
+    ]
+  }
+}

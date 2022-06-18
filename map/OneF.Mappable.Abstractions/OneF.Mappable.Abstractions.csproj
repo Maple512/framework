@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>$(NetStandard)</TargetFramework>
+    <IncludeMainPack>false</IncludeMainPack>
+  </PropertyGroup>
+
+</Project>

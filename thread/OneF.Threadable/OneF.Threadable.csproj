@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="../../common.props"/>
+
+    <PropertyGroup>
+        <TargetFramework>$(NetFramework)</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\OneT.Threadable.Abstractions\OneF.Threadable.Abstractions.csproj"/>
+        <ProjectReference Include="..\..\module\OneF.Moduleable.Abstractions\OneF.Moduleable.Abstractions.csproj"/>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+{
+  "solution": {
+    "path": "OneF.sln",
+    "projects": [
+      "module\\OneF.IoCable.Abstractions\\OneF.IoCable.Abstractions.csproj",
+      "module\\OneF.IoCable.Extensions\\OneF.IoCable.Extensions.csproj",
+      "module\\OneF.IoCable\\OneF.IoCable.csproj",
+      "module\\OneF.Moduleable.Abstractions\\OneF.Moduleable.Abstractions.csproj",
+      "module\\OneF.Moduleable.TestBase\\OneF.Moduleable.TestBase.csproj",
+      "module\\OneF.Moduleable.Test\\OneF.Moduleable.Test.csproj",
+      "module\\OneF.Moduleable\\OneF.Moduleable.csproj",
+      "module\\OneF.Proxyable.Abstractions\\OneF.Proxyable.Abstractions.csproj",
+      "module\\OneF.Proxyable\\OneF.Proxyable.csproj"
+    ]
+  }
+}

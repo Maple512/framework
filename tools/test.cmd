@@ -1,0 +1,5 @@
+cd..
+
+dotnet test
+
+pause
