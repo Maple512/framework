@@ -193,7 +193,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
                 {
                     _parametersInScope.Add(variable, variable.Name);
 
-                    _ = Append(variable.Type.ShortDisplayName());
+                    _ = Append(variable.Type.GetShortDisplayName());
 
                     _ = Append(" ");
 
@@ -260,7 +260,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
 
     protected override Expression VisitGoto(GotoExpression gotoExpression)
     {
-        _ = AppendLine("return (" + gotoExpression.Target.Type.ShortDisplayName() + ")" + gotoExpression.Target + " {");
+        _ = AppendLine("return (" + gotoExpression.Target.Type.GetShortDisplayName() + ")" + gotoExpression.Target + " {");
         using(_stringBuilder.Indent())
         {
             _ = Visit(gotoExpression.Value);
@@ -350,7 +350,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
 
     protected override Expression VisitMemberInit(MemberInitExpression memberInitExpression)
     {
-        _ = _stringBuilder.Append("new " + memberInitExpression.Type.ShortDisplayName());
+        _ = _stringBuilder.Append("new " + memberInitExpression.Type.GetShortDisplayName());
 
         var appendAction = memberInitExpression.Bindings.Count > 1 ? (Func<string, ExpressionVisitor>)AppendLine : Append;
         _ = appendAction("{ ");
@@ -419,7 +419,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
         {
             if(method.IsStatic)
             {
-                _ = _stringBuilder.Append(method.DeclaringType!.ShortDisplayName()).Append(".");
+                _ = _stringBuilder.Append(method.DeclaringType!.GetShortDisplayName()).Append(".");
             }
 
             _ = _stringBuilder.Append(method.Name);
@@ -498,7 +498,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
                         _ = stringBuilder.Append(", ");
                     }
 
-                    _ = stringBuilder.Append(genericArgument.ShortDisplayName());
+                    _ = stringBuilder.Append(genericArgument.GetShortDisplayName());
                     first = false;
                 }
 
@@ -517,7 +517,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
         var isAnonymousType = newExpression.Type.IsAnonymousType();
         if(!isAnonymousType)
         {
-            _ = _stringBuilder.Append(newExpression.Type.ShortDisplayName());
+            _ = _stringBuilder.Append(newExpression.Type.GetShortDisplayName());
             _ = appendAction("(");
         }
         else
@@ -564,7 +564,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
         var isComplex = newArrayExpression.Expressions.Count > 1;
         var appendAction = isComplex ? s => AppendLine(s) : (Action<string>)(s => Append(s));
 
-        appendAction("new " + newArrayExpression.Type.GetElementType()!.ShortDisplayName() + "[]");
+        appendAction("new " + newArrayExpression.Type.GetElementType()!.GetShortDisplayName() + "[]");
         appendAction("{ ");
 
         IDisposable? indent = null;
@@ -649,7 +649,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
         switch(unaryExpression.NodeType)
         {
             case ExpressionType.Convert:
-                _ = _stringBuilder.Append("(" + unaryExpression.Type.ShortDisplayName() + ")");
+                _ = _stringBuilder.Append("(" + unaryExpression.Type.GetShortDisplayName() + ")");
 
                 if(unaryExpression.Operand is BinaryExpression)
                 {
@@ -678,7 +678,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
             case ExpressionType.TypeAs:
                 _ = _stringBuilder.Append("(");
                 _ = Visit(unaryExpression.Operand);
-                _ = _stringBuilder.Append(" as " + unaryExpression.Type.ShortDisplayName() + ")");
+                _ = _stringBuilder.Append(" as " + unaryExpression.Type.GetShortDisplayName() + ")");
                 break;
 
             case ExpressionType.Quote:
@@ -695,7 +695,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
 
     protected override Expression VisitDefault(DefaultExpression defaultExpression)
     {
-        _ = _stringBuilder.Append("default(" + defaultExpression.Type.ShortDisplayName() + ")");
+        _ = _stringBuilder.Append("default(" + defaultExpression.Type.GetShortDisplayName() + ")");
 
         return defaultExpression;
     }
@@ -729,7 +729,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
     {
         _ = _stringBuilder.Append("(");
         _ = Visit(typeBinaryExpression.Expression);
-        _ = _stringBuilder.Append(" is " + typeBinaryExpression.TypeOperand.ShortDisplayName() + ")");
+        _ = _stringBuilder.Append(" is " + typeBinaryExpression.TypeOperand.GetShortDisplayName() + ")");
 
         return typeBinaryExpression;
     }
@@ -813,7 +813,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
         if(value is IEnumerable enumerable
             and not string)
         {
-            _ = _stringBuilder.Append(value.GetType().ShortDisplayName() + " { ");
+            _ = _stringBuilder.Append(value.GetType().GetShortDisplayName() + " { ");
 
             var first = true;
             foreach(var item in enumerable)
@@ -838,7 +838,7 @@ public class ExpressionPrintVisitor : ExpressionVisitor
             ? "null"
             : value.ToString() != value.GetType().ToString()
                 ? value.ToString()
-                : value.GetType().ShortDisplayName();
+                : value.GetType().GetShortDisplayName();
 
         if(value is string)
         {

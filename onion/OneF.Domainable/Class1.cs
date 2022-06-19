@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maple512 and Contributors
+// Copyright 2021 Maple512 and Contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License"),
 // you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 // limitations under the License.
 
 namespace OneF.Domainable;
+
 public class Class1
 {
 

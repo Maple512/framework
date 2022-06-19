@@ -56,7 +56,7 @@ public static class OneFTypeExtensions
     public static MethodInfo GetStaticGenericMethod(this Type type, string methodName, int parametersCount)
         => type.GetMethods(BindingFlagExtensions.StaticFlags & ~BindingFlags.NonPublic)
             .FirstOrDefault(x => x.Name == methodName && x.IsGenericMethod && x.GetParameters().Length == parametersCount)
-            ?? throw new ArgumentOutOfRangeException(nameof(methodName), $"Cannot find suitable method {type.DisplayName()}.{methodName}({parametersCount} parameters).");
+            ?? throw new ArgumentOutOfRangeException(nameof(methodName), $"Cannot find suitable method {type.GetDisplayName()}.{methodName}({parametersCount} parameters).");
 
     public static MethodInfo GetRequiredDeclaredMethod(this Type type, string name)
     {
@@ -238,7 +238,7 @@ public static class OneFTypeExtensions
     /// <param name="fullName"></param>
     /// <param name="isCompilable"></param>
     /// <returns></returns>
-    public static string DisplayName(this Type type, bool fullName = true, bool isCompilable = false)
+    public static string GetDisplayName(this Type type, bool fullName = true, bool isCompilable = false)
     {
         var stringBuilder = new StringBuilder();
 
@@ -259,7 +259,7 @@ public static class OneFTypeExtensions
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static string ShortDisplayName(this Type type) => type.DisplayName(false);
+    public static string GetShortDisplayName(this Type type) => type.GetDisplayName(false);
 
     private static void ProcessType(StringBuilder builder, Type type, bool fullName, bool isCompilable)
     {

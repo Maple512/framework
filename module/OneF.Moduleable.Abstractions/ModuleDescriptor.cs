@@ -52,6 +52,6 @@ public sealed class ModuleDescriptor : IModuleDescriptor
 
     public override string ToString()
     {
-        return $"Module: {StartupType.ShortDisplayName()}";
+        return $"Module: {StartupType.GetShortDisplayName()}";
     }
 }
