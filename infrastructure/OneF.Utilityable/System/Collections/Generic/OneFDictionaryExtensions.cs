@@ -34,7 +34,7 @@ public static class OneFDictionaryExtensions
         TKey key,
         Func<TValue> factory)
     {
-        return GetOrAdd(directory, key, k => factory());
+        return GetOrAdd(directory, key, _ => factory());
     }
 
     public static TValue GetOrAdd<TKey, TValue>(
