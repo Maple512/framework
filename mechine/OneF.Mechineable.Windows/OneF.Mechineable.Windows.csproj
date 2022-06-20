@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="../../common.props" />
+
+    <PropertyGroup>
+        <TargetFramework>$(NetFramework)-windows</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Management" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="Windows" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\infrastructure\OneF.Utilityable\OneF.Utilityable.csproj" />
+    </ItemGroup>
+
+</Project>

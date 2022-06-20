@@ -5,7 +5,7 @@
 
     <!-- Net Version -->
     <NetStandard>netstandard2.0</NetStandard>
-    <NetFramework>net6.0</NetFramework>
+    <NetFramework>net7.0</NetFramework>
 
     <!-- Microsoft Version -->
     <MSVersion>6.0.0</MSVersion>

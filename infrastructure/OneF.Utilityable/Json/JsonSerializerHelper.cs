@@ -24,7 +24,7 @@ public static class JsonSerializerHelper
     /// <summary>
     /// <see cref="JsonSerializerOptions"/> 的标准实例
     /// </summary>
-    public static JsonSerializerOptions StandardInstance { get; } = new()
+    public static JsonSerializerOptions StandardOptions { get; } = new()
     {
         ReadCommentHandling = JsonCommentHandling.Skip,
         // Mark: 解决中文乱码
@@ -37,7 +37,7 @@ public static class JsonSerializerHelper
     /// <see cref="JsonSerializerOptions"/> 的实例， <see
     /// cref="JsonSerializerOptions.PropertyNamingPolicy"/> 是 <see cref="SnakeCaseNamingPolly.SnakeCase"/>
     /// </summary>
-    public static JsonSerializerOptions SnakeCaseInstance { get; } = new()
+    public static JsonSerializerOptions SnakeCaseOptions { get; } = new()
     {
         ReadCommentHandling = JsonCommentHandling.Skip,
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),

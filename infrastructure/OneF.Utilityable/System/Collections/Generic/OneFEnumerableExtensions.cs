@@ -34,7 +34,23 @@ public static class OneFEnumerableExtensions
         return string.Join(separator, source);
     }
 
-    public static string JoinAsString<T>(this IEnumerable<T> source, char separator = ',')
+    public static string JoinAsString(this IEnumerable source, char separator = ',')
+    {
+        _ = Check.NotNull(source);
+
+        var list = new List<string?>();
+
+        foreach(var item in source)
+        {
+            list.Add(item?.ToString());
+        }
+
+        return string.Join(separator, list);
+    }
+
+    public static string JoinAsString<T>(
+        this IEnumerable<T> source,
+        char separator = ',')
     {
         _ = Check.NotNull(source);
 

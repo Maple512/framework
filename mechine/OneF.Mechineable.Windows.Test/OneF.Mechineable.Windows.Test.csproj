@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="../../common.xunit.props" />
+
+    <PropertyGroup>
+        <TargetFramework>$(NetFramework)-windows</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="Windows" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\OneF.Mechineable.Windows\OneF.Mechineable.Windows.csproj" />
+    </ItemGroup>
+
+</Project>
