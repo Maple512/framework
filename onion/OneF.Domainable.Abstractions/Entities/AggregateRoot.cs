@@ -12,17 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable.DependencyInjection;
+namespace OneF.Domainable.Entities;
 
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
-
-public class DependencyInjection_Test : TestBase
+/// <summary>
+/// 聚合根
+/// </summary>
+public class AggregateRoot : Entity
 {
-    [Fact]
-    public void Get_service_from_serviceprovider()
-    {
-        GetRequiredService<IService1>().GetString().ShouldBe(nameof(IService1));
-    }
+}
+
+/// <summary>
+/// 聚合根
+/// </summary>
+/// <typeparam name="TId"></typeparam>
+public class AggregateRoot<TId> : Entity<TId>
+    where TId : notnull
+{
+    protected AggregateRoot() { }
+
+    protected AggregateRoot(TId id) : base(id) { }
 }

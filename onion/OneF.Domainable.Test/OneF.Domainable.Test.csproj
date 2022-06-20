@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="../../common.props" />
+    <Import Project="../../common.xunit.props" />
 
     <PropertyGroup>
         <TargetFramework>$(NetFramework)</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OneF.Domainable.Abstractions\OneF.Domainable.Abstractions.csproj" />
+      <ProjectReference Include="..\OneF.Domainable\OneF.Domainable.csproj" />
     </ItemGroup>
 
 </Project>

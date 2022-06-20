@@ -20,7 +20,7 @@ using Microsoft.Extensions.Options;
 using OneF.Moduleable.Fakes;
 using Shouldly;
 
-public sealed class ModuleableTestModule : OneFModule
+public sealed class TestModule : OneFModule
 {
     public override void ConfigureServices(in ConfigureServiceContext context)
     {

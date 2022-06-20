@@ -6,8 +6,4 @@
         <TargetFramework>$(NetFramework)</TargetFramework>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\OneF.Domainable.Abstractions\OneF.Domainable.Abstractions.csproj" />
-    </ItemGroup>
-
 </Project>

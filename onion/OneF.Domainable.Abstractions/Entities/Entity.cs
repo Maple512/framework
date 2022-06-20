@@ -12,25 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Eventable;
+namespace OneF.Domainable.Entities;
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Reflection;
 
+/// <summary>
+/// 实体
+/// </summary>
+[Serializable]
+public class Entity : IEntity
+{
+
+}
+
+/// <summary>
+/// 实体
+/// </summary>
+/// <typeparam name="TId"></typeparam>
 [Serializable]
 [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
-public abstract class EventDataBase : IEventData
+public class Entity<TId> : Entity, IEquatable<Entity<TId>>
+    where TId : notnull
 {
-    protected EventDataBase(long id)
+    protected Entity() { }
+
+    protected Entity(TId id)
     {
         Id = id;
-        CreatedTime = DateTimeOffset.UtcNow;
     }
 
-    public long Id { get; }
+    /// <summary>
+    /// 唯一ID
+    /// </summary>
+    [Key]
+    public TId Id { get; set; }
 
-    public DateTimeOffset CreatedTime { get; }
+    public bool Equals(Entity<TId>? other)
+    {
+        return other != null && other.Id.Equals(Id);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if(obj is Entity<TId> other)
+        {
+            return Equals(other);
+        }
+
+        return false;
+    }
 
     /// <inheritdoc/>
     public override int GetHashCode()
@@ -40,6 +73,6 @@ public abstract class EventDataBase : IEventData
 
     private string GetDebuggerDisplay()
     {
-        return $"Event: {GetType().GetShortDisplayName()}, Id: {Id}, CreatedTime: {CreatedTime:u}";
+        return $"{nameof(Entity)}: {GetType().GetShortDisplayName()}, {nameof(Id)}: {Id}";
     }
 }

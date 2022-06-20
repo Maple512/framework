@@ -110,7 +110,7 @@ public class DbCommon_Test
 
         var count = (long?)await command.ExecuteScalarAsync();
 
-        count.ShouldBe(2);
+        count.ShouldBe(0);
 
         var reader = await command.ExecuteReaderAsync();
 

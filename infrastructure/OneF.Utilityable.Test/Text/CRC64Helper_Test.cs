@@ -12,30 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable;
+namespace OneF.Text;
 
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using OneF.Moduleable.Fakes;
 using Shouldly;
 using Xunit;
 
-public class Configuration_Test : TestBase
+public class CRC64Helper_Test
 {
-    protected sealed override void ConfigureConfiguration(IConfigurationBuilder builder)
-    {
-        _ = builder.AddJsonFile("appsettings.json");
-    }
-
     [Fact]
-    public void Get_Connection_Strings()
+    public void To_crc64()
     {
-        var optins = GetRequiredService<IOptions<TestOptions>>().Value;
+        var value = "测试一下，Maple512";
 
-        optins.ConnectionStrings.ContainsKey("Default").ShouldBeTrue();
+        var result = CRC64Helper.ToCRC64(value);
 
-        var connectionString = Configuration.GetConnectionString("Default");
-
-        connectionString.ShouldNotBeNullOrWhiteSpace();
+        result.ShouldBe(2055468325);
     }
 }

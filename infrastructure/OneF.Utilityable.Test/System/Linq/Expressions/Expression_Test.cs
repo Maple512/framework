@@ -15,6 +15,7 @@
 namespace System.Linq.Expressions;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Shouldly;
 using Xunit;
@@ -24,15 +25,19 @@ public class Expression_Test
     [Fact]
     public void Combine_Lambdas()
     {
-        var list = Enumerable.Range(1, 10)
+        var count = 10;
+
+        var list = Enumerable.Range(0, count)
                              .Select(x => new Model(x));
 
         Expression<Func<Model, bool>> left = x => x.Id > 2;
         Expression<Func<Model, bool>> right = x => x.Id < 5;
 
-        var result = list.Where(left.And(right).Compile());
+        // and
+        list.Where(left.And(right).Compile()).GetCount().ShouldBe(2);
 
-        Assert.True(result.Count() == 2);
+        // or
+        list.Where(left.Or(right).Compile()).GetCount().ShouldBe(count);
     }
 
     [Fact]
@@ -44,18 +49,18 @@ public class Expression_Test
 
         _ = model.ShouldNotBeNull();
     }
-}
 
-internal class Model
-{
-    private Model()
+    private class Model
     {
-    }
+        private Model()
+        {
+        }
 
-    public Model(int id)
-    {
-        Id = id;
-    }
+        public Model(int id)
+        {
+            Id = id;
+        }
 
-    public int Id { get; }
+        public int Id { get; }
+    }
 }

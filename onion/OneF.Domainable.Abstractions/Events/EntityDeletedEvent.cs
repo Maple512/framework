@@ -12,34 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Eventable;
+namespace OneF.Domainable.Events;
 
 using System;
-using System.Diagnostics;
-using System.Reflection;
+using OneF.Domainable.Entities;
+using OneF.Eventable;
 
 [Serializable]
-[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
-public abstract class EventDataBase : IEventData
+public class EntityDeletedEvent<TEntity> : EventDataBase, IDomainEventData
+    where TEntity : class, IEntity
 {
-    protected EventDataBase(long id)
+    public TEntity Entity { get; }
+
+    public EntityDeletedEvent(long id, TEntity entity)
+        : base(id)
     {
-        Id = id;
-        CreatedTime = DateTimeOffset.UtcNow;
-    }
-
-    public long Id { get; }
-
-    public DateTimeOffset CreatedTime { get; }
-
-    /// <inheritdoc/>
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
-    }
-
-    private string GetDebuggerDisplay()
-    {
-        return $"Event: {GetType().GetShortDisplayName()}, Id: {Id}, CreatedTime: {CreatedTime:u}";
+        Entity = entity;
     }
 }

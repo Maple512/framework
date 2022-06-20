@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable;
-
-using Microsoft.Extensions.Configuration;
-
-public class ModuleableTestBase : OneFModuleTestBase<ModuleableTestModule>
+namespace OneF.Domainable.Entities;
+public interface IUser
 {
-    protected sealed override void ConfigureConfiguration(IConfigurationBuilder builder)
-    {
-        _ = builder.AddJsonFile("appsettings.json");
-    }
+    IUserId Id { get; }
+
+    string Name { get; }
+
+    string DisplayName { get; }
 }

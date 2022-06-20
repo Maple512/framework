@@ -12,34 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Eventable;
+namespace OneF.Domainable.Fakes;
 
-using System;
-using System.Diagnostics;
-using System.Reflection;
+using OneF.Domainable.Entities;
 
-[Serializable]
-[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
-public abstract class EventDataBase : IEventData
+public readonly record struct UserId(long Key) : IUserId
 {
-    protected EventDataBase(long id)
+    public static implicit operator long(UserId user)
     {
-        Id = id;
-        CreatedTime = DateTimeOffset.UtcNow;
+        return user.Key;
     }
 
-    public long Id { get; }
-
-    public DateTimeOffset CreatedTime { get; }
-
-    /// <inheritdoc/>
-    public override int GetHashCode()
+    public static implicit operator UserId(long id)
     {
-        return Id.GetHashCode();
+        return new UserId(id);
     }
 
-    private string GetDebuggerDisplay()
+    public override string ToString()
     {
-        return $"Event: {GetType().GetShortDisplayName()}, Id: {Id}, CreatedTime: {CreatedTime:u}";
+        return $"{Key}";
     }
 }

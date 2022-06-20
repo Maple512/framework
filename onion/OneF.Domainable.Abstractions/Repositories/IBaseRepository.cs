@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable.DependencyInjection;
+namespace OneF.Domainable.Repositories;
 
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
+using System.Linq;
+using System.Threading.Tasks;
+using OneF.Domainable.Entities;
 
-public class DependencyInjection_Test : TestBase
+public interface IBaseRepository<TEntity>
+    where TEntity : class, IEntity
 {
-    [Fact]
-    public void Get_service_from_serviceprovider()
-    {
-        GetRequiredService<IService1>().GetString().ShouldBe(nameof(IService1));
-    }
+    Task<IQueryable<TEntity>> AsQueryableAsync();
 }

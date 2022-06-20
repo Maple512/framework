@@ -12,17 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable.DependencyInjection;
+namespace OneF.Domainable;
 
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
-
-public class DependencyInjection_Test : TestBase
+/// <summary>
+/// 标识为领域服务
+/// </summary>
+public interface IDomainService
 {
-    [Fact]
-    public void Get_service_from_serviceprovider()
-    {
-        GetRequiredService<IService1>().GetString().ShouldBe(nameof(IService1));
-    }
 }

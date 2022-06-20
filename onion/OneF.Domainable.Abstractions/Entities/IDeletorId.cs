@@ -12,17 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable.DependencyInjection;
-
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
-
-public class DependencyInjection_Test : TestBase
+namespace OneF.Domainable.Entities;
+public interface IDeletorId
 {
-    [Fact]
-    public void Get_service_from_serviceprovider()
-    {
-        GetRequiredService<IService1>().GetString().ShouldBe(nameof(IService1));
-    }
+    /// <summary>
+    /// 删除者用户ID
+    /// </summary>
+    IUserId DeleteUserId { get; }
 }

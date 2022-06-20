@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable.DependencyInjection;
+namespace OneF.Domainable.Entities;
 
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
+using System;
 
-public class DependencyInjection_Test : TestBase
+public interface IDeletionTime
 {
-    [Fact]
-    public void Get_service_from_serviceprovider()
-    {
-        GetRequiredService<IService1>().GetString().ShouldBe(nameof(IService1));
-    }
+    /// <summary>
+    /// 删除时间
+    /// </summary>
+    DateTimeOffset? DeletionTime { get; }
 }

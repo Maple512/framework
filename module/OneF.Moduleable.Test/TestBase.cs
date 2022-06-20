@@ -15,27 +15,8 @@
 namespace OneF.Moduleable;
 
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
 
-public class Configuration_Test : TestBase
+public class TestBase : OneFModuleTestBase<TestModule>
 {
-    protected sealed override void ConfigureConfiguration(IConfigurationBuilder builder)
-    {
-        _ = builder.AddJsonFile("appsettings.json");
-    }
-
-    [Fact]
-    public void Get_Connection_Strings()
-    {
-        var optins = GetRequiredService<IOptions<TestOptions>>().Value;
-
-        optins.ConnectionStrings.ContainsKey("Default").ShouldBeTrue();
-
-        var connectionString = Configuration.GetConnectionString("Default");
-
-        connectionString.ShouldNotBeNullOrWhiteSpace();
-    }
+    
 }

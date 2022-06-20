@@ -12,17 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable.DependencyInjection;
+namespace OneF.Domainable.Fakes;
 
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
+using OneF.Domainable.Entities;
 
-public class DependencyInjection_Test : TestBase
+public class User : Entity<IUserId>, IUser
 {
-    [Fact]
-    public void Get_service_from_serviceprovider()
+    private User() { }
+
+    public User(long id, string name, string? displayName = null) : base(new UserId(id))
     {
-        GetRequiredService<IService1>().GetString().ShouldBe(nameof(IService1));
+        Name = Check.NotNullOrWhiteSpace(name);
+
+        DisplayName = displayName ?? Name;
     }
+
+    public string Name { get; }
+
+    public string DisplayName { get; }
 }

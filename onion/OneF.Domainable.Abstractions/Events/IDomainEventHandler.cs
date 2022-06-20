@@ -12,17 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Moduleable.DependencyInjection;
+namespace OneF.Domainable.Events;
 
-using OneF.Moduleable.Fakes;
-using Shouldly;
-using Xunit;
+using OneF.Eventable;
 
-public class DependencyInjection_Test : TestBase
+public interface IDomainEventHandler : IEventHandler<IDomainEventData>
 {
-    [Fact]
-    public void Get_service_from_serviceprovider()
-    {
-        GetRequiredService<IService1>().GetString().ShouldBe(nameof(IService1));
-    }
 }

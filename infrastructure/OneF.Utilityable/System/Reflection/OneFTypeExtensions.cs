@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using OneF;
 
 [StackTraceHidden]
@@ -471,6 +472,14 @@ public static class OneFTypeExtensions
         => type.Name.StartsWith("<>", StringComparison.Ordinal)
             && type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), inherit: false).Length > 0
             && type.Name.Contains("AnonymousType");
+
+    public static bool IsTaskType(this Type type)
+    {
+        return (type == typeof(Task))
+            || !(!type.GetTypeInfo().IsGenericType || type.GetGenericTypeDefinition() != typeof(Task<>));
+    }
+
+    public static bool IsVoidType(this Type type) => (type == typeof(void)) || (type == null);
 
     #endregion Type
 

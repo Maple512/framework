@@ -14,7 +14,17 @@
 
 namespace OneF.Domainable;
 
-public interface IEntity
-{
+using OneF.Domainable.Fakes;
+using Shouldly;
+using Xunit;
 
+public class Entity_Test
+{
+    [Fact]
+    public void New()
+    {
+        var user = new User(new UserId(1), "Maple512");
+
+        user.ShouldNotBeNull();
+    }
 }

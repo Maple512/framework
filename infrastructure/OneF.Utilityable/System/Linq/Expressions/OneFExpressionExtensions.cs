@@ -32,9 +32,9 @@ public static class OneFExpressionExtensions
     }
 
     public static Expression<Func<T, bool>> CombineLambdas<T>(
-    this Expression<Func<T, bool>> left,
-    Expression<Func<T, bool>> right,
-    ExpressionType expressionType)
+        this Expression<Func<T, bool>> left,
+        Expression<Func<T, bool>> right,
+        ExpressionType expressionType)
     {
         var visitor = new SubstituteParameterVisitor
         {

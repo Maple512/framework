@@ -26,7 +26,8 @@ public interface IEventHandler<in TEventData> : IEventHandler
 }
 
 /// <summary>
-/// error: 请不要继承这个接口
+/// 时间处理器
+/// <para>注意：请不要继承这个接口！！！，请使用<see cref="IEventHandler{TEventData}"/>泛型接口</para>
 /// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public interface IEventHandler

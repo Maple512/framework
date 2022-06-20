@@ -67,7 +67,7 @@ public class EventBus_Test : EventableTestBase
         var source = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
         _ = await Should.ThrowAsync<TaskCanceledException>(async () => await _eventBus.PublishAsync(
-            new DelayEvent { Delay = TimeSpan.FromSeconds(3) },
+            new DelayEvent(1) { Delay = TimeSpan.FromSeconds(3) },
             new ParallelOptions { CancellationToken = source.Token }));
     }
 }

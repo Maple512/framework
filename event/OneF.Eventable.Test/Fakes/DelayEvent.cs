@@ -18,5 +18,9 @@ using System;
 
 public class DelayEvent : EventDataBase
 {
+    public DelayEvent(long id) : base(id)
+    {
+    }
+
     public TimeSpan Delay { get; set; }
 }
