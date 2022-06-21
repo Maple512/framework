@@ -77,8 +77,6 @@ public class TypeMapContext
             {
                 // report diagnostic, something went wrong
                 throw new Exception("某种未知错误，修复后，移除该代码，使用continue");
-
-                continue;
             }
 
             var sourceTypeProperties = sourceTypeSymbol.GetMembers().OfType<IPropertySymbol>();

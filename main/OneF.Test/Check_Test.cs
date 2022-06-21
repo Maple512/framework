@@ -20,7 +20,7 @@ using System.Linq;
 using Shouldly;
 using Xunit;
 
-public class ValidateHelper_Test
+public class Check_Test
 {
     [Fact]
     public void Validate_model()

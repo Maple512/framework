@@ -33,7 +33,7 @@ public class CreaetNewObject_Test
 
     public CreaetNewObject_Test()
     {
-        _ctor = typeof(Employee).GetConstructor(Type.EmptyTypes);
+        _ctor = typeof(Employee).GetConstructor(Type.EmptyTypes)!;
 
         _provider = new ServiceCollection().AddTransient<Employee>().BuildServiceProvider();
 
@@ -45,16 +45,16 @@ public class CreaetNewObject_Test
         // il
         var dynamic = new DynamicMethod("DynamicMethod", typeof(Employee), null, typeof(CreaetNewObject_Test).Module, false);
         var il = dynamic.GetILGenerator();
-        il.Emit(OpCodes.Newobj, typeof(Employee).GetConstructor(Type.EmptyTypes));
+        il.Emit(OpCodes.Newobj, typeof(Employee).GetConstructor(Type.EmptyTypes)!);
         il.Emit(OpCodes.Ret);
-        _emitActivator = dynamic.CreateDelegate(typeof(Func<Employee>)) as Func<Employee>;
+        _emitActivator = (dynamic.CreateDelegate(typeof(Func<Employee>)) as Func<Employee>)!;
     }
 
     [Benchmark(Baseline = true)]
     public Employee UseNew() => new();
 
     [Benchmark]
-    public Employee UseReflection() => _ctor.Invoke(null) as Employee;
+    public Employee UseReflection() => (_ctor.Invoke(null) as Employee)!;
 
     [Benchmark]
     public Employee UseActivator() => Activator.CreateInstance<Employee>();

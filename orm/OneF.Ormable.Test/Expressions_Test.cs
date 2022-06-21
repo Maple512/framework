@@ -16,7 +16,6 @@ namespace OneF.Ormable;
 
 using System;
 using System.Collections;
-using Xunit;
 
 public class Expressions_Test : IEnumerator
 {
@@ -25,12 +24,6 @@ public class Expressions_Test : IEnumerator
     public bool MoveNext()
     {
         throw new NotImplementedException();
-    }
-
-    [Fact]
-    public void Print_test()
-    {
-
     }
 
     public void Reset()

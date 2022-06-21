@@ -75,7 +75,7 @@ public class NetworkInformation
             // dns
             DNS = ipProperties.DnsAddresses[0].ToString();
         }
-        
+
         var ipv4 = ipProperties.UnicastAddresses
             .FirstOrDefault(x => x.PrefixLength == 24);
 

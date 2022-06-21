@@ -22,7 +22,7 @@ using System.Threading;
 
 public class EntityQueryable<TEntity> : IOrderedEnumerable<TEntity>, IAsyncEnumerable<TEntity>
 {
-    private readonly IAsyncQueryProvider _queryProvider;
+    //private readonly IAsyncQueryProvider _queryProvider;
 
     public IOrderedEnumerable<TEntity> CreateOrderedEnumerable<TKey>(Func<TEntity, TKey> keySelector, IComparer<TKey>? comparer, bool descending)
     {

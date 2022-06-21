@@ -27,7 +27,7 @@ public class CPUHelper_Test
     /// 内核
     /// </summary>
     [Fact]
-    public void win32_processor()
+    public void Win32_processor()
     {
         using var manage = new ManagementObjectSearcher("Select * from Win32_Processor").Get();
 
@@ -40,7 +40,7 @@ public class CPUHelper_Test
                 if(property.IsArray
                     && property.Value is not null)
                 {
-                    Debug.WriteLine($"{property.Name}: {(property.Value as IEnumerable).JoinAsString()}, {property.Type}");
+                    Debug.WriteLine($"{property.Name}: {(property.Value as IEnumerable)!.JoinAsString()}, {property.Type}");
                 }
                 else
                 {
@@ -77,7 +77,7 @@ public class CPUHelper_Test
     /// 物理
     /// </summary>
     [Fact]
-    public void win32_computer()
+    public void Win32_computer()
     {
         using var manage = new ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get();
 
@@ -90,7 +90,7 @@ public class CPUHelper_Test
                 if(property.IsArray
                     && property.Value is not null)
                 {
-                    Debug.WriteLine($"{property.Name}: {(property.Value as IEnumerable).JoinAsString()}, {property.Type}");
+                    Debug.WriteLine($"{property.Name}: {(property.Value as IEnumerable)!.JoinAsString()}, {property.Type}");
                 }
                 else
                 {

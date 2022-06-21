@@ -7,8 +7,4 @@
     <RootNamespace>$(RootName)</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OneF\OneF.csproj" />
-  </ItemGroup>
-
 </Project>

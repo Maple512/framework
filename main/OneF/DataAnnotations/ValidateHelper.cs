@@ -16,6 +16,7 @@ namespace OneF;
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using OneF.DataAnnotations;
 
 public static class ValidateHelper
 {
@@ -26,7 +27,7 @@ public static class ValidateHelper
     /// <param name="instance"></param>
     /// <param name="validateAllProperties"><see langword="true"/>时，检查所有属性，否则，仅检查标注了<see cref="RequiredAttribute"/>的属性，默认<see langword="true"/></param>
     /// <returns></returns>
-    public static ValidateResult TryValidate<T>(T instance, bool validateAllProperties = true)
+    public static CheckResult TryValidate<T>(T instance, bool validateAllProperties = true)
         where T : class
     {
         _ = Check.NotNull(instance);
@@ -39,19 +40,7 @@ public static class ValidateHelper
             errors,
             validateAllProperties);
 
-        return new ValidateResult(isValid, errors);
-    }
-
-    public readonly ref struct ValidateResult
-    {
-        public ValidateResult(bool isValid, ICollection<ValidationResult> errors)
-        {
-            IsValid = isValid;
-            Errors = errors;
-        }
-
-        public bool IsValid { get; }
-
-        public ICollection<ValidationResult> Errors { get; }
+        return new CheckResult(isValid, errors);
     }
 }
+

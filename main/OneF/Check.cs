@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using OneF.DataAnnotations;
 
 [StackTraceHidden]
 [DebuggerStepThrough]
@@ -115,6 +116,7 @@ public static class Check
 
     /// <summary>
     /// 验证
+    /// <para>如果验证失败，则抛出异常</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="instance"></param>
@@ -122,19 +124,40 @@ public static class Check
     /// <returns></returns>
     /// <exception cref="AggregateException"></exception>
     [return: NotNullIfNotNull("instance")]
-    public static T Valid<T>([NotNullWhen(true)] T instance, bool validateAllProperties = true)
+    public static void Validate<T>([NotNullWhen(true)] T instance, bool validateAllProperties = true)
         where T : class
     {
-        var result = ValidateHelper.TryValidate(instance, validateAllProperties);
+        var result = TryValidate(instance, validateAllProperties);
 
         if(!result.IsValid)
         {
-            throw new AggregateException(result.Errors.Select(x => new ValidationException(
+            throw new AggregateException(result.Errors!.Select(x => new ValidationException(
                 x,
                 null,
                 instance)));
         }
+    }
 
-        return instance;
+    /// <summary>
+    /// 验证
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="instance"></param>
+    /// <param name="validateAllProperties"><see langword="true"/>时，检查所有属性，否则，仅检查标注了<see cref="RequiredAttribute"/>的属性，默认<see langword="true"/></param>
+    /// <returns></returns>
+    public static CheckResult TryValidate<T>(T instance, bool validateAllProperties = true)
+        where T : class
+    {
+        _ = NotNull(instance);
+
+        var errors = new List<ValidationResult>();
+
+        var isValid = Validator.TryValidateObject(
+            instance!,
+            new(instance!, null, null),
+            errors,
+            validateAllProperties);
+
+        return new CheckResult(isValid, errors);
     }
 }

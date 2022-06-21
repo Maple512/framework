@@ -14,9 +14,7 @@
 
 namespace OneF.Moduleable;
 
-using Microsoft.Extensions.Configuration;
-
 public class TestBase : OneFModuleTestBase<TestModule>
 {
-    
+
 }

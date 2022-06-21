@@ -82,7 +82,7 @@ public static class ArgumentEscaper
     ///
     /// See here for more info: http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx
     /// </summary>
-    /// <param name="args"></param>
+    /// <param name="arguments"></param>
     /// <returns></returns>
     private static IEnumerable<string> EscapeArgArrayForCmd(IEnumerable<string> arguments)
     {
@@ -172,7 +172,7 @@ public static class ArgumentEscaper
     ///
     /// See here for more info: http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx
     /// </summary>
-    /// <param name="args"></param>
+    /// <param name="argument"></param>
     /// <returns></returns>
     private static string EscapeArgForCmd(string argument)
     {
