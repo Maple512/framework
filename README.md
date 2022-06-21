@@ -4,7 +4,7 @@
 ![Publish](https://github.com/maple512/framework/actions/workflows/publish.yml/badge.svg)
 ![code line](https://img.shields.io/tokei/lines/github/maple512/framework?style=flat)
 ![release](https://img.shields.io/github/v/release/maple512/framework?include_prereleases&style=flat)
-![license](https://img.shields.io/github/license/maple512/framework)
+[![license](https://img.shields.io/github/license/maple512/framework)](./LICENSE)
 
 > `One Framework`，一个基础设施框架
 
@@ -16,6 +16,13 @@
 - `DateTimeOffset`：时间统一使用`DateTimeOffset`
 - `Info`：只包含属性的类（非实体与DTO），使用`Info`作为后缀
 - `Abstractions`：抽象项目，无具体实现，其中包括具体项目所需的`Attribute`，`Interface`等
+
+## 项目
+
+| 名称               | 版本                                                                            | 下载量                                                     | 描述                 |
+| ------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------- |
+| `OneF.Moduleable`  | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Moduleable)  | ![Nuget](https://img.shields.io/nuget/dt/OneF.Moduleable)  | 为项目提供模块化功能 |
+| `OneF.Utilityable` | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Utilityable) | ![Nuget](https://img.shields.io/nuget/dt/OneF.Utilityable) | 包含一些常用的方法   |
 
 ## 参考
 
