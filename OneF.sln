@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		common.test.props = common.test.props
 		common.xunit.props = common.xunit.props
 		Directory.build.props = Directory.build.props
+		global.json = global.json
 		LICENSE = LICENSE
 		logo.png = logo.png
 		notes.md = notes.md
@@ -96,9 +97,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneF.Application.Abstractio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mechine", "mechine", "{3340F0EB-02D3-47F3-8848-8662B6C217D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneF.Mechineable.Windows", "mechine\OneF.Mechineable.Windows\OneF.Mechineable.Windows.csproj", "{E6CFBEFF-F4F1-46D4-9257-EC7A48E463F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneF.Mechineable.Windows", "mechine\OneF.Mechineable.Windows\OneF.Mechineable.Windows.csproj", "{E6CFBEFF-F4F1-46D4-9257-EC7A48E463F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneF.Mechineable.Windows.Test", "mechine\OneF.Mechineable.Windows.Test\OneF.Mechineable.Windows.Test.csproj", "{85BF75C1-E23F-497C-B986-5600CC713765}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneF.Mechineable.Windows.Test", "mechine\OneF.Mechineable.Windows.Test\OneF.Mechineable.Windows.Test.csproj", "{85BF75C1-E23F-497C-B986-5600CC713765}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

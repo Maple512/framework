@@ -12,8 +12,7 @@ jobs:
       - uses: actions/checkout@main
       - uses: actions/setup-dotnet@main
         with:
-          dotnet-version: 7.0.x
-          include-prerelease: true
+          global-json-file: ../../global.json
 
       - name: Restore
         run: dotnet restore
