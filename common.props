@@ -5,7 +5,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <VersionPrefix>0.0.1</VersionPrefix>
-    <VersionSuffix>rc.20220518.3</VersionSuffix>
+    <VersionSuffix>rc.202200621.1</VersionSuffix>
     <IsPackable>true</IsPackable>
     <IncludeMainPack>true</IncludeMainPack>
   </PropertyGroup>

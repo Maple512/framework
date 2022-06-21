@@ -1,14 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../../common.props"/>
+    <Import Project="../../common.props"/>
 
-  <PropertyGroup>
-    <TargetFramework>$(NetFramework)</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>$(NetFramework)</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\module\OneF.Moduleable\OneF.Moduleable.csproj"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(MSVersion)"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\module\OneF.Moduleable\OneF.Moduleable.csproj"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(MSVersion)"/>
+    </ItemGroup>
 
 </Project>

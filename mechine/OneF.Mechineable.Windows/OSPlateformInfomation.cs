@@ -15,13 +15,58 @@
 namespace OneF.Mechineable;
 
 using System;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
+/// <summary>
+/// 操作系统信息
+/// </summary>
+[Serializable]
 public class OSPlateformInfomation
 {
+    public OSPlateformInfomation()
+    {
+        RegistryHelper.TryGetValue(
+           RegistryHive.LocalMachine,
+           "Software\\Microsoft\\Windows NT\\CurrentVersion",
+           "ProductId",
+           out var productId);
+
+        ProductId = productId;
+    }
+
     /// <summary>
     /// 启动时间
     /// </summary>
-    public static TimeSpan StartedTick => TimeSpan.FromMilliseconds(Environment.TickCount);
+    public TimeSpan StartedTime { get; } = TimeSpan.FromMilliseconds(Environment.TickCount);
 
+    /// <summary>
+    /// 计算机名称
+    /// </summary>
+    public string MachineName { get; } = Environment.MachineName;
 
+    /// <summary>
+    /// 操作系统及版本
+    /// </summary>
+    public string OSVersion { get; } = Environment.OSVersion.ToString();
+
+    /// <summary>
+    /// 运行时身份
+    /// </summary>
+    public string RuntimeIdentifier { get; } = RuntimeInformation.RuntimeIdentifier;
+
+    /// <summary>
+    /// 系统架构
+    /// </summary>
+    public string OSArchitecture { get; } = RuntimeInformation.OSArchitecture.ToString();
+
+    /// <summary>
+    /// NET框架
+    /// </summary>
+    public string FrameworkDescription { get; } = RuntimeInformation.FrameworkDescription;
+
+    /// <summary>
+    /// 产品ID
+    /// </summary>
+    public string? ProductId { get; }
 }
