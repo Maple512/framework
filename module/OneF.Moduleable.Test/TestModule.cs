@@ -14,25 +14,12 @@
 
 namespace OneF.Moduleable;
 
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using OneF.Moduleable.Fakes;
-using Shouldly;
 
 public sealed class TestModule : OneFModule
 {
     public override void ConfigureServices(in ConfigureServiceContext context)
     {
         _ = context.Configure<TestOptions>(context.Configuration);
-    }
-
-    public override ValueTask ConfigureAsync(ConfigureContext context)
-    {
-        var optins = context.ServiceProvider.GetRequiredService<IOptions<TestOptions>>().Value;
-
-        optins.ConnectionStrings.ContainsKey("Default").ShouldBeTrue();
-
-        return base.ConfigureAsync(context);
     }
 }
