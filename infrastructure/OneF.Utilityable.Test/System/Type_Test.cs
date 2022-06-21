@@ -132,25 +132,25 @@ public class Type_Test
     {
         typeof(Type).Name.ShouldBe("Type");
         typeof(Type).FullName.ShouldBe("System.Type");
-        typeof(Type).AssemblyQualifiedName.ShouldBe("System.Type, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e");
+        typeof(Type).AssemblyQualifiedName.ShouldContain("System.Type, System.Private.CoreLib");
         typeof(Type).GetDisplayName().ShouldBe("System.Type");
         typeof(Type).GetShortDisplayName().ShouldBe("Type");
 
         typeof(IEnumerable<Type>).Name.ShouldBe("IEnumerable`1");
-        typeof(IEnumerable<Type>).FullName.ShouldBe("System.Collections.Generic.IEnumerable`1[[System.Type, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]");
-        typeof(IEnumerable<Type>).AssemblyQualifiedName.ShouldBe("System.Collections.Generic.IEnumerable`1[[System.Type, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e");
+        typeof(IEnumerable<Type>).FullName.ShouldContain("System.Collections.Generic.IEnumerable`1[[System.Type, System.Private.CoreLib");
+        typeof(IEnumerable<Type>).AssemblyQualifiedName.ShouldContain("System.Collections.Generic.IEnumerable`1[[System.Type, System.Private.CoreLib");
         typeof(IEnumerable<Type>).GetDisplayName().ShouldBe("System.Collections.Generic.IEnumerable<System.Type>");
         typeof(IEnumerable<Type>).GetShortDisplayName().ShouldBe("IEnumerable<Type>");
 
         typeof(Type[]).Name.ShouldBe("Type[]");
         typeof(Type[]).FullName.ShouldBe("System.Type[]");
-        typeof(Type[]).AssemblyQualifiedName.ShouldBe("System.Type[], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e");
+        typeof(Type[]).AssemblyQualifiedName.ShouldContain("System.Type[], System.Private.CoreLib");
         typeof(Type[]).GetDisplayName().ShouldBe("System.Type[]");
         typeof(Type[]).GetShortDisplayName().ShouldBe("Type[]");
 
         typeof((string, int)).Name.ShouldBe("ValueTuple`2");
-        typeof((string, int)).FullName.ShouldBe("System.ValueTuple`2[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]");
-        typeof((string, int)).AssemblyQualifiedName.ShouldBe("System.ValueTuple`2[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e");
+        typeof((string, int)).FullName.ShouldContain("System.ValueTuple`2[[System.String, System.Private.CoreLib");
+        typeof((string, int)).AssemblyQualifiedName.ShouldContain("System.ValueTuple`2[[System.String, System.Private.CoreLib");
         typeof((string, int)).GetDisplayName().ShouldBe("System.ValueTuple<string, int>");
         typeof((string, int)).GetShortDisplayName().ShouldBe("ValueTuple<string, int>");
     }

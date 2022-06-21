@@ -60,7 +60,7 @@ public unsafe class Sizeof_Test
 
         sizeof(AutoMultiStruct).ShouldBe(32);
 
-        sizeof(ExplicitMultiStruct).ShouldBe(31);
+        sizeof(ExplicitMultiStruct).ShouldBe(32);
 
         sizeof(DateTime).ShouldBe(8);
 
