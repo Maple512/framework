@@ -28,7 +28,7 @@ public class Check_Test
         var model = new Model();
 
         // 验证所有属性
-        var result = ValidateHelper.TryValidate(model);
+        var result = Check.TryValidate(model);
 
         result.IsValid.ShouldBeFalse();
 
@@ -36,19 +36,19 @@ public class Check_Test
 
         model.Description = "012345";
 
-        result = ValidateHelper.TryValidate(model);
+        result = Check.TryValidate(model);
 
         result.Errors.Count.ShouldBe(2);
 
         // 验证必填属性
-        result = ValidateHelper.TryValidate(model, false);
+        result = Check.TryValidate(model, false);
 
         result.Errors.Count.ShouldBe(1);
 
         // 验证 IValidatableObject （在前面所有验证项都验证后，执行自定义验证）
         model.Name = "1234";
         model.Description = "12456";
-        result = ValidateHelper.TryValidate(model);
+        result = Check.TryValidate(model);
 
         result.IsValid.ShouldBeFalse();
 

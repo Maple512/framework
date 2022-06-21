@@ -8,8 +8,6 @@
 
 > `One Framework`，一个基础设施框架
 
-> 协作，统一
-
 ## 代码规范
 
 - `OneF`：作为整个项目的前缀名
@@ -18,12 +16,6 @@
 - `DateTimeOffset`：时间统一使用`DateTimeOffset`
 - `Info`：只包含属性的类（非实体与DTO），使用`Info`作为后缀
 - `Abstractions`：抽象项目，无具体实现，其中包括具体项目所需的`Attribute`，`Interface`等
-
-## 项目
-
-- `event`: 事件，进程内通信
-- `infrastructure`: 基础设施
-- `main`: 基础项目，所有项目都需要引用的一个
 
 ## 参考
 
@@ -35,7 +27,3 @@
 - `aspnetboilerplate`：<https://github.com/aspnetboilerplate/aspnetboilerplate>
 - `furion`：<https://dotnetchina.gitee.io/furion/docs>
 - `osharp`：<https://github.com/dotnetcore/osharp>
-
-### 文章/博客
-
-- `lindexi`：<https://lindexi.gitee.io/>
