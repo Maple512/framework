@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@main
       - uses: actions/setup-dotnet@main
         with:
-          global-json-file: ../../global.json
+          global-json-file: global.json
 
       - name: Restore
         run: dotnet restore
