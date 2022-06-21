@@ -123,7 +123,7 @@ public static class Check
     /// <returns></returns>
     /// <exception cref="AggregateException"></exception>
     [return: NotNullIfNotNull("instance")]
-    public static void Validate<T>([NotNullWhen(true)] T instance, bool validateAllProperties = true)
+    public static T Validate<T>([NotNullWhen(true)] T instance, bool validateAllProperties = true)
         where T : class
     {
         var result = TryValidate(instance, validateAllProperties);
@@ -135,6 +135,8 @@ public static class Check
                 null,
                 instance)));
         }
+
+        return instance;
     }
 
     /// <summary>

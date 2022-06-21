@@ -29,7 +29,7 @@ public class IdGenerator
     /// </summary>
     public const long JS_NUMBER_MAX_SAFE_INTEGER = 9_007_199_254_740_992;
 
-    private static readonly IdGeneratorOptions _options;
+    private readonly IdGeneratorOptions _options;
 
     protected byte _timestampShift = 0;
     protected ushort _currentSeqNumber;
@@ -47,7 +47,7 @@ public class IdGenerator
 
     public IdGenerator(IdGeneratorOptions options)
     {
-        Check.Validate(options);
+        _options = Check.Validate(options);
 
         _timestampShift = (byte)(_options.WorkerIdBitLength + _options.SequenceBitLength);
 
