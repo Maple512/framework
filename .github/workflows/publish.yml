@@ -28,4 +28,4 @@ jobs:
 
       - name: Push
         shell: bash
-        run: dotnet nuget push ./packages/*.nupkg -k ${{ secrets.PUSH_NUGET }} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-service-endpoint
+        run: dotnet nuget push ./packages/*.nupkg -k ${{ secrets.NUGET_ACCESS_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-service-endpoint
