@@ -17,7 +17,7 @@ namespace OneF.Ormable;
 using System;
 using System.Runtime.Serialization;
 
-public class OneFOrmException : OneFException
+public class OneFOrmException : Exception
 {
     public OneFOrmException()
         : base()
