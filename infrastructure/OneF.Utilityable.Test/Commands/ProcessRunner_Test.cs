@@ -14,28 +14,54 @@
 
 namespace OneF.Commands;
 
+using System;
+using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
 
 public class ProcessRunner_Test
 {
+    public ProcessRunner_Test()
+    {
+        if(Console.IsOutputRedirected)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+        }
+
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+    }
+
     [Fact]
     public async Task Run_dotnet_info()
     {
-        var parameters = new ProcessRunnerParameter("dotnet", "--info");
+        var parameters = new ProcessRunnerParameter("dotnet", "--info")
+        {
+            OutputReceiver = static (_, msg) =>
+            {
+                Debug.WriteLine(msg);
+            }
+        };
 
         var result = await ProcessRunner.RunAsync(parameters);
 
-        result.ExitedCode.ShouldBe(0);
+        result.ShouldBe(0);
     }
 
     [Fact]
     public async Task Use_Cmd_Run_Command()
     {
-        var result = await ProcessRunner.RunAsync(
-            new("cmd", "dotnet", "--info"));
+        var parameters = new ProcessRunnerParameter("cmd", "dotnet --info")
+        {
+            OutputReceiver = static (_, msg) =>
+            {
+                Debug.WriteLine(msg);
+            }
+        };
 
-        result.ExitedCode.ShouldBe(0);
+        var result = await ProcessRunner.RunAsync(parameters);
+
+        result.ShouldBe(0);
     }
 }

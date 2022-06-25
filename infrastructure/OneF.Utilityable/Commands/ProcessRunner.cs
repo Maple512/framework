@@ -22,6 +22,11 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+// source: https://github.com/dotnet/tye/blob/bb49c161641b9f182cba61641149006811f60dc2/src/Microsoft.Tye.Core/ProcessUtil.cs
+
+/// <summary>
+/// 如果输出出现乱码，尝试加一段：<code>Console.OutputEncoding = Encoding.UTF8;</code>
+/// </summary>
 public static class ProcessRunner
 {
     [DllImport("libc", SetLastError = true, EntryPoint = "kill")]
@@ -29,7 +34,12 @@ public static class ProcessRunner
 
     private static readonly bool _isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-    // source: https://github.com/dotnet/tye/blob/bb49c161641b9f182cba61641149006811f60dc2/src/Microsoft.Tye.Core/ProcessUtil.cs
+    public static async ValueTask<int> RunAsync(string command, params string[] args)
+    {
+        var result = await RunAsync(new(command, args));
+
+        return result;
+    }
 
     /// <summary>
     /// 使用指定的参数运行一个进程
@@ -38,7 +48,7 @@ public static class ProcessRunner
     /// <param name="continueWithErrors">遇到错误是否继续</param>
     /// <param name="token">取消令牌</param>
     /// <returns></returns>
-    public static async ValueTask<ProcessResult> RunAsync(
+    public static async ValueTask<int> RunAsync(
         ProcessRunnerParameter paramter,
         bool continueWithErrors = true,
         CancellationToken token = default)
@@ -97,7 +107,7 @@ public static class ProcessRunner
             Debug.WriteLine(e.Data, "Error Data");
         };
 
-        var processLifetimeTask = new TaskCompletionSource<ProcessResult>();
+        var processLifetimeTask = new TaskCompletionSource<int>();
 
         process.Exited += (_, e) =>
         {
@@ -107,10 +117,7 @@ public static class ProcessRunner
             }
             else
             {
-                _ = processLifetimeTask.TrySetResult(new ProcessResult(
-                    process.Id,
-                    process.ExitCode,
-                    process.TotalProcessorTime));
+                _ = processLifetimeTask.TrySetResult(process.ExitCode);
             }
         };
 
