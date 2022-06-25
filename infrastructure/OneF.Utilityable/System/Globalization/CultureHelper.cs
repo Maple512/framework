@@ -45,6 +45,8 @@ public static class CultureHelper
 
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = uiCulture ?? culture;
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = uiCulture ?? culture;
 
         return new DisposeAction(
             () =>

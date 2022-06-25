@@ -16,6 +16,7 @@ namespace OneF.Commands;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,42 +42,44 @@ public class ProcessRunner_Test
 
         new ProcessRunnerParameter("dotnet", "--info")
         {
-            OutputReceiver = (_, msg) =>
-            {
-                content.Add(msg);
-            }
+            OutputReceiver = (_, msg) => content.Add(msg),
         }.Run().ShouldBe(0);
 
-        content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
+        if(CultureInfo.CurrentCulture.Name == "zh-CN")
+        {
+            content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
+        }
     }
 
     [Fact]
     public async Task Run_dotnet_info()
     {
         var content = new List<string?>();
+
         (await new ProcessRunnerParameter("dotnet", "--info")
         {
-            OutputReceiver = (_, msg) =>
-            {
-                content.Add(msg);
-            }
+            OutputReceiver = (_, msg) => content.Add(msg),
         }.RunAsync()).ShouldBe(0);
 
-        content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
+        if(CultureInfo.CurrentCulture.Name == "zh-CN")
+        {
+            content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
+        }
     }
 
     [Fact]
     public async Task Use_Cmd_Run_Command()
     {
         var content = new List<string?>();
+
         (await new ProcessRunnerParameter("cmd", "dotnet --info")
         {
-            OutputReceiver = (_, msg) =>
-            {
-                content.Add(msg);
-            }
+            OutputReceiver = (_, msg) => content.Add(msg),
         }.RunAsync()).ShouldBe(0);
 
-        content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
+        if(CultureInfo.CurrentCulture.Name == "zh-CN")
+        {
+            content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
+        }
     }
 }
