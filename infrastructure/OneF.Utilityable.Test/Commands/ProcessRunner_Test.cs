@@ -15,7 +15,8 @@
 namespace OneF.Commands;
 
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shouldly;
@@ -34,34 +35,48 @@ public class ProcessRunner_Test
     }
 
     [Fact]
+    public void Run_sync()
+    {
+        var content = new List<string?>();
+
+        new ProcessRunnerParameter("dotnet", "--info")
+        {
+            OutputReceiver = (_, msg) =>
+            {
+                content.Add(msg);
+            }
+        }.Run().ShouldBe(0);
+
+        content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
+    }
+
+    [Fact]
     public async Task Run_dotnet_info()
     {
-        var parameters = new ProcessRunnerParameter("dotnet", "--info")
+        var content = new List<string?>();
+        (await new ProcessRunnerParameter("dotnet", "--info")
         {
-            OutputReceiver = static (_, msg) =>
+            OutputReceiver = (_, msg) =>
             {
-                Debug.WriteLine(msg);
+                content.Add(msg);
             }
-        };
+        }.RunAsync()).ShouldBe(0);
 
-        var result = await ProcessRunner.RunAsync(parameters);
-
-        result.ShouldBe(0);
+        content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
     }
 
     [Fact]
     public async Task Use_Cmd_Run_Command()
     {
-        var parameters = new ProcessRunnerParameter("cmd", "dotnet --info")
+        var content = new List<string?>();
+        (await new ProcessRunnerParameter("cmd", "dotnet --info")
         {
-            OutputReceiver = static (_, msg) =>
+            OutputReceiver = (_, msg) =>
             {
-                Debug.WriteLine(msg);
+                content.Add(msg);
             }
-        };
+        }.RunAsync()).ShouldBe(0);
 
-        var result = await ProcessRunner.RunAsync(parameters);
-
-        result.ShouldBe(0);
+        content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
     }
 }

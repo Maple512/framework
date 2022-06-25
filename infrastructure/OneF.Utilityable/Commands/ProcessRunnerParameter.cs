@@ -16,7 +16,8 @@ namespace OneF.Commands;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 /// <summary>
 /// <para><see cref="ProcessRunner"/> 的参数</para>
@@ -63,9 +64,10 @@ public sealed class ProcessRunnerParameter
 
     public List<string> EnvironmentsToRemove { get; } = new();
 
+    /// <summary>
+    /// shell中的输出接收器，<see langword="false"/> 表示 <see cref="Process.StandardError"/> 中的内容
+    /// </summary>
     public Action<bool, string?>? OutputReceiver { get; set; }
-
-    public StringBuilder? OutputBuilder { get; set; }
 
     public ProcessRunnerParameter WithWorkingDirectory(string workingDirectory)
     {
@@ -74,7 +76,7 @@ public sealed class ProcessRunnerParameter
         return this;
     }
 
-    public ProcessRunnerParameter WithEnvironment(string name, string value)
+    public ProcessRunnerParameter AddEnvironment(string name, string value)
     {
         _ = Check.NotNullOrWhiteSpace(name);
 
@@ -83,7 +85,7 @@ public sealed class ProcessRunnerParameter
         return this;
     }
 
-    public ProcessRunnerParameter WithEnvironmentToRemove(string name)
+    public ProcessRunnerParameter AddEnvironmentToRemove(string name)
     {
         _ = Check.NotNullOrWhiteSpace(name);
 
@@ -99,12 +101,16 @@ public sealed class ProcessRunnerParameter
         return this;
     }
 
-    public ProcessRunnerParameter WithArguments(params string[] arguments)
+    public ProcessRunnerParameter AddArguments(params string[] arguments)
     {
         Arguments.AddRange(arguments);
 
         return this;
     }
+
+    public int Run() => ProcessRunner.Run(this);
+
+    public ValueTask<int> RunAsync() => ProcessRunner.RunAsync(this);
 
     private static bool UseCmd(string fileName)
     {

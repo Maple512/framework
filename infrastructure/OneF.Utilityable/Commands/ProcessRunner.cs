@@ -19,8 +19,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using OneF.Interop;
 
 // source: https://github.com/dotnet/tye/blob/bb49c161641b9f182cba61641149006811f60dc2/src/Microsoft.Tye.Core/ProcessUtil.cs
 
@@ -29,17 +31,10 @@ using System.Threading.Tasks;
 /// </summary>
 public static class ProcessRunner
 {
-    [DllImport("libc", SetLastError = true, EntryPoint = "kill")]
-    private static extern int sys_kill(int pid, int sig);
-
     private static readonly bool _isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
     public static async ValueTask<int> RunAsync(string command, params string[] args)
-    {
-        var result = await RunAsync(new(command, args));
-
-        return result;
-    }
+        => await RunAsync(new(command, args));
 
     /// <summary>
     /// 使用指定的参数运行一个进程
@@ -64,8 +59,8 @@ public static class ProcessRunner
                 WorkingDirectory = paramter.WorkingDirectory,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                //StandardOutputEncoding =  Encoding.UTF8,
-                //StandardErrorEncoding =  Encoding.UTF8,
+                StandardOutputEncoding =  Encoding.UTF8,
+                StandardErrorEncoding =  Encoding.UTF8,
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 WindowStyle = ProcessWindowStyle.Hidden
@@ -92,19 +87,11 @@ public static class ProcessRunner
         process.OutputDataReceived += (_, e) =>
         {
             paramter.OutputReceiver?.Invoke(true, e.Data);
-
-            paramter.OutputBuilder?.AppendLine(e.Data);
-
-            Debug.WriteLine(e.Data, "Output Data");
         };
 
         process.ErrorDataReceived += (_, e) =>
         {
             paramter.OutputReceiver?.Invoke(false, e.Data);
-
-            paramter.OutputBuilder?.AppendLine(e.Data);
-
-            Debug.WriteLine(e.Data, "Error Data");
         };
 
         var processLifetimeTask = new TaskCompletionSource<int>();
@@ -134,17 +121,7 @@ public static class ProcessRunner
 
         if(result == cancelledTcs.Task)
         {
-            if(!_isWindows)
-            {
-                _ = sys_kill(process.Id, sig: 2); // SIGINT
-            }
-            else
-            {
-                if(!process.CloseMainWindow())
-                {
-                    process.Kill();
-                }
-            }
+            Kill(process);
 
             if(!process.HasExited)
             {
@@ -162,5 +139,93 @@ public static class ProcessRunner
         }
 
         return await processLifetimeTask.Task;
+    }
+
+    public static int Run(string command, params string[] args)
+        => Run(new ProcessRunnerParameter(command, args));
+
+    /// <summary>
+    /// 使用指定的参数运行一个进程
+    /// </summary>
+    /// <param name="paramter">参数</param>
+    /// <returns></returns>
+    public static int Run(ProcessRunnerParameter paramter)
+    {
+        var arguments = ArgumentEscaper.EscapeAndConcatenateArgArrayForProcessStart(paramter.Arguments);
+
+        using var process = new Process
+        {
+            StartInfo =
+            {
+                FileName = paramter.FileName,
+                Arguments = arguments,
+                WorkingDirectory = paramter.WorkingDirectory,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                StandardOutputEncoding =  Encoding.UTF8,
+                StandardErrorEncoding =  Encoding.UTF8,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                WindowStyle = ProcessWindowStyle.Hidden
+            },
+            EnableRaisingEvents = true,
+        };
+
+        if(paramter.Environments.Any())
+        {
+            foreach(var env in paramter.Environments)
+            {
+                process.StartInfo.Environment.Add(env);
+            }
+        }
+
+        if(paramter.EnvironmentsToRemove.Any())
+        {
+            foreach(var env in paramter.EnvironmentsToRemove)
+            {
+                _ = process.StartInfo.Environment.Remove(env);
+            }
+        }
+
+        process.OutputDataReceived += (_, e) =>
+        {
+            paramter.OutputReceiver?.Invoke(true, e.Data);
+        };
+
+        process.ErrorDataReceived += (_, e) =>
+        {
+            paramter.OutputReceiver?.Invoke(false, e.Data);
+        };
+
+        _ = process.Start();
+
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
+        process.WaitForExit();
+
+        Kill(process);
+
+        if(!process.HasExited)
+        {
+            process.Kill();
+        }
+
+        return process.ExitCode;
+    }
+
+    public static void Kill(Process process)
+    {
+        if(!_isWindows)
+        {
+            _ = Interop.Libc.Kill(process.Id, sig: 2); // SIGINT
+        }
+        else
+        {
+            if(!process.CloseMainWindow())
+            {
+                process.Kill();
+            }
+        }
     }
 }

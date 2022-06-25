@@ -5,6 +5,7 @@
   <PropertyGroup>
     <TargetFramework>$(NetFramework)</TargetFramework>
     <RootNamespace>$(RootName)</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
