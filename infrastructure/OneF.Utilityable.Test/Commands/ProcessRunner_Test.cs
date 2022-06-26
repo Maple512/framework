@@ -16,10 +16,9 @@ namespace OneF.Commands;
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OneF.Shells;
 using Shouldly;
 using Xunit;
 
@@ -38,17 +37,8 @@ public class ProcessRunner_Test
     [Fact]
     public void Run_sync()
     {
-        var content = new List<string?>();
-
-        new ProcessRunnerParameter("dotnet", "--info")
-        {
-            OutputReceiver = (_, msg) => content.Add(msg),
-        }.Run().ShouldBe(0);
-
-        if(CultureInfo.CurrentCulture.Name == "zh-CN")
-        {
-            content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
-        }
+        ProcessRunner.Start("dotnet", "--info")
+            .Run().ShouldBe(0);
     }
 
     [Fact]
@@ -56,15 +46,9 @@ public class ProcessRunner_Test
     {
         var content = new List<string?>();
 
-        (await new ProcessRunnerParameter("dotnet", "--info")
-        {
-            OutputReceiver = (_, msg) => content.Add(msg),
-        }.RunAsync()).ShouldBe(0);
-
-        if(CultureInfo.CurrentCulture.Name == "zh-CN")
-        {
-            content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
-        }
+        (await ProcessRunner.Start("dotnet", "--info")
+            .WithOutput((_, msg) => content.Add(msg))
+            .RunAsync()).ShouldBe(0);
     }
 
     [Fact]
@@ -72,14 +56,19 @@ public class ProcessRunner_Test
     {
         var content = new List<string?>();
 
-        (await new ProcessRunnerParameter("cmd", "dotnet --info")
-        {
-            OutputReceiver = (_, msg) => content.Add(msg),
-        }.RunAsync()).ShouldBe(0);
+        (await ProcessRunner.Start("dotnet", "--info")
+            .WithOutput((_, msg) => content.Add(msg))
+            .UseCmd()
+            .RunAsync()).ShouldBe(0);
+    }
 
-        if(CultureInfo.CurrentCulture.Name == "zh-CN")
-        {
-            content.Any(x => x?.Contains("反映任何 global.json") == true).ShouldBeTrue();
-        }
+    [Fact]
+    public async Task Run_nuget_search()
+    {
+        var content = new List<string?>();
+
+        (await ProcessRunner.Start("dotnet", "tool search OneS.MediateS.Cli --detail --prerelease")
+            .WithOutput((_, msg) => content.Add(msg))
+            .RunAsync()).ShouldBe(0);
     }
 }

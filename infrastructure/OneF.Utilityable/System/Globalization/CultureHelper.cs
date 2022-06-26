@@ -33,7 +33,7 @@ public static class CultureHelper
 
     public static IDisposable Use(CultureInfo culture, CultureInfo? uiCulture = null)
     {
-        _ = Check.NotNull(culture);
+        Check.NotNull(culture);
 
         if(CultureInfo.CurrentCulture == culture && CultureInfo.CurrentUICulture == uiCulture)
         {
@@ -45,8 +45,6 @@ public static class CultureHelper
 
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = uiCulture ?? culture;
-        CultureInfo.DefaultThreadCurrentCulture = culture;
-        CultureInfo.DefaultThreadCurrentUICulture = uiCulture ?? culture;
 
         return new DisposeAction(
             () =>

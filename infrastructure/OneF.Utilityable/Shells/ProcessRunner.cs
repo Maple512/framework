@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Commands;
+namespace OneF.Shells;
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +29,11 @@ using OneF.Interop;
 /// </summary>
 public static class ProcessRunner
 {
-    private static readonly bool _isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+    public static ProcessRunnerParameter Start(string commamd, string args)
+        => new(commamd, args);
+
+    public static ProcessRunnerParameter Start(string commamd, params string[] args)
+        => new(commamd, args);
 
     public static async ValueTask<int> RunAsync(string command, params string[] args)
         => await RunAsync(new(command, args));
@@ -48,7 +50,7 @@ public static class ProcessRunner
         bool continueWithErrors = true,
         CancellationToken token = default)
     {
-        var arguments = ArgumentEscaper.EscapeAndConcatenateArgArrayForProcessStart(paramter.Arguments);
+        var arguments = paramter.GetArguments();
 
         using var process = new Process
         {
@@ -68,6 +70,8 @@ public static class ProcessRunner
             EnableRaisingEvents = true,
         };
 
+        Debug.WriteLine($"Running: `{paramter.FileName} {arguments}`");
+
         if(paramter.Environments.Any())
         {
             foreach(var env in paramter.Environments)
@@ -80,18 +84,22 @@ public static class ProcessRunner
         {
             foreach(var env in paramter.EnvironmentsToRemove)
             {
-                _ = process.StartInfo.Environment.Remove(env);
+                process.StartInfo.Environment.Remove(env);
             }
         }
 
         process.OutputDataReceived += (_, e) =>
         {
             paramter.OutputReceiver?.Invoke(true, e.Data);
+
+            Debug.WriteLine($"OutputData: {e.Data}");
         };
 
         process.ErrorDataReceived += (_, e) =>
         {
             paramter.OutputReceiver?.Invoke(false, e.Data);
+
+            Debug.WriteLine($"ErrorData: {e.Data}");
         };
 
         var processLifetimeTask = new TaskCompletionSource<int>();
@@ -100,7 +108,7 @@ public static class ProcessRunner
         {
             if(continueWithErrors && process.ExitCode != 0)
             {
-                _ = processLifetimeTask.TrySetException(new InvalidOperationException($"Command {paramter.FileName} {paramter.Arguments.JoinAsString(' ')} returned exit code: {process.ExitCode}"));
+                _ = processLifetimeTask.TrySetException(new InvalidOperationException($"Command: '{paramter.FileName} {arguments}', returned exit code: {process.ExitCode}"));
             }
             else
             {
@@ -151,7 +159,7 @@ public static class ProcessRunner
     /// <returns></returns>
     public static int Run(ProcessRunnerParameter paramter)
     {
-        var arguments = ArgumentEscaper.EscapeAndConcatenateArgArrayForProcessStart(paramter.Arguments);
+        var arguments = paramter.GetArguments();
 
         using var process = new Process
         {
@@ -170,6 +178,8 @@ public static class ProcessRunner
             },
             EnableRaisingEvents = true,
         };
+
+        Debug.WriteLine($"Running: `{paramter.FileName} {arguments}`");
 
         if(paramter.Environments.Any())
         {
@@ -190,11 +200,15 @@ public static class ProcessRunner
         process.OutputDataReceived += (_, e) =>
         {
             paramter.OutputReceiver?.Invoke(true, e.Data);
+
+            Debug.WriteLine($"OutputData: {e.Data}");
         };
 
         process.ErrorDataReceived += (_, e) =>
         {
             paramter.OutputReceiver?.Invoke(false, e.Data);
+
+            Debug.WriteLine($"ErrorData: {e.Data}");
         };
 
         _ = process.Start();
@@ -216,7 +230,7 @@ public static class ProcessRunner
 
     public static void Kill(Process process)
     {
-        if(!_isWindows)
+        if(!OSPlatformHelper.IsWindows)
         {
             _ = Interop.Libc.Kill(process.Id, sig: 2); // SIGINT
         }

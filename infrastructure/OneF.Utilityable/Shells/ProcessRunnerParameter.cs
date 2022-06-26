@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Commands;
+namespace OneF.Shells;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using OneF;
 
 /// <summary>
 /// <para><see cref="ProcessRunner"/> 的参数</para>
@@ -25,40 +26,27 @@ using System.Threading.Tasks;
 /// </summary>
 public sealed class ProcessRunnerParameter
 {
-    /*
-     cmd 命令参数解析：https://www.cnblogs.com/mq0036/p/5244892.html
-     */
-    private static readonly string[] _cmdPrefix = new[] { "/s", "/c" };
+    private ShellType? _type;
+
+    private readonly IReadOnlyList<string> _arguments;
 
     public ProcessRunnerParameter(string fileName, string arguments)
     {
         FileName = Check.NotNullOrWhiteSpace(fileName);
 
-        if(UseCmd(fileName))
-        {
-            Arguments.AddRange(_cmdPrefix);
-        }
-
-        Arguments.AddRange(arguments.Split(' '));
+        _arguments = arguments.Trim().Split(' ');
     }
 
     public ProcessRunnerParameter(string fileName, params string[] arguments)
     {
         FileName = Check.NotNullOrWhiteSpace(fileName);
 
-        if(UseCmd(fileName))
-        {
-            Arguments.AddRange(_cmdPrefix);
-        }
-
-        Arguments.AddRange(arguments);
+        _arguments = arguments;
     }
 
-    public string FileName { get; }
+    public string FileName { get; private set; }
 
-    public List<string> Arguments { get; } = new();
-
-    public string? WorkingDirectory { get; set; }
+    public string? WorkingDirectory { get; private set; }
 
     public Dictionary<string, string?> Environments { get; } = new();
 
@@ -67,7 +55,7 @@ public sealed class ProcessRunnerParameter
     /// <summary>
     /// shell中的输出接收器，<see langword="false"/> 表示 <see cref="Process.StandardError"/> 中的内容
     /// </summary>
-    public Action<bool, string?>? OutputReceiver { get; set; }
+    public Action<bool, string?>? OutputReceiver { get; private set; }
 
     public ProcessRunnerParameter WithWorkingDirectory(string workingDirectory)
     {
@@ -101,24 +89,56 @@ public sealed class ProcessRunnerParameter
         return this;
     }
 
-    public ProcessRunnerParameter AddArguments(params string[] arguments)
+    public ShellType Type
     {
-        Arguments.AddRange(arguments);
+        get
+        {
+            return _type ?? ShellType.None;
+        }
+        private set { _type = value; }
+    }
+
+    public ProcessRunnerParameter UsePowerShell()
+    {
+        Type = ShellType.POWERSHELL;
 
         return this;
+    }
+
+    public ProcessRunnerParameter UseCmd()
+    {
+        Type = ShellType.CMD;
+
+        return this;
+    }
+
+    public string GetArguments()
+    {
+        string args;
+
+        switch(Type)
+        {
+            case ShellType.CMD:
+                args = $"/s /c \"{FileName} {ArgumentEscaper.EscapeAndConcatenateArgArrayForCmdProcessStart(_arguments)}\"";
+                FileName = "cmd.exe";
+                break;
+            case ShellType.POWERSHELL:
+                args = $"-Command \"{FileName} {ArgumentEscaper.EscapeAndConcatenateArgArrayForProcessStart(_arguments)}\"";
+                FileName = "PowerShell.exe";
+                break;
+            case ShellType.None:
+            case ShellType.PWSH:
+            case ShellType.BASH:
+            case ShellType.SH:
+            default:
+                args = ArgumentEscaper.EscapeAndConcatenateArgArrayForProcessStart(_arguments);
+                break;
+        }
+
+        return args;
     }
 
     public int Run() => ProcessRunner.Run(this);
 
     public ValueTask<int> RunAsync() => ProcessRunner.RunAsync(this);
-
-    private static bool UseCmd(string fileName)
-    {
-        if(fileName.EndsWith("cmd", StringComparison.OrdinalIgnoreCase))
-        {
-            return true;
-        }
-
-        return fileName.EndsWith("cmd.exe", StringComparison.OrdinalIgnoreCase);
-    }
 }

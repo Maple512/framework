@@ -14,6 +14,7 @@
 
 namespace OneF.Commands;
 
+using OneF.Shells;
 using Shouldly;
 using Xunit;
 
@@ -32,5 +33,11 @@ public class ArgumentEscaper_Test
     public void EscapesArgumentsForProcessStart(string[] args, string expected)
     {
         ArgumentEscaper.EscapeAndConcatenateArgArrayForProcessStart(args).ShouldBe(expected);
+    }
+
+    [Fact]
+    public void Escapes()
+    {
+        var result = ArgumentEscaper.EscapeSingleArg($"tool update CliFullName -g ");
     }
 }
