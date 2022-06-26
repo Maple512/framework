@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Commands;
+namespace OneF.Shells;
 
-using OneF.Shells;
 using Shouldly;
 using Xunit;
 
