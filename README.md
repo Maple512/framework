@@ -35,3 +35,4 @@
 - `aspnetboilerplate`：<https://github.com/aspnetboilerplate/aspnetboilerplate>
 - `furion`：<https://dotnetchina.gitee.io/furion/docs>
 - `osharp`：<https://github.com/dotnetcore/osharp>
+- `modular monolith with ddd`: <https://github.com/kgrzybek/modular-monolith-with-ddd>
