@@ -3,7 +3,7 @@
 [![Build](https://github.com/maple512/framework/actions/workflows/build.yml/badge.svg)](https://github.com/Maple512/framework/actions/workflows/build.yml)
 [![Publish](https://github.com/maple512/framework/actions/workflows/publish.yml/badge.svg)](https://github.com/Maple512/framework/actions/workflows/publish.yml)
 ![code line](https://img.shields.io/tokei/lines/github/maple512/framework?style=flat)
-[![release](https://img.shields.io/github/v/release/maple512/framework?include_prereleases&style=flat)](https://github.com/Maple512/framework/releases)
+[![release](https://img.shields.io/github/v/release/maple512/framework?include_prereleases&style=flat&color=blue)](https://github.com/Maple512/framework/releases)
 [![license](https://img.shields.io/github/license/maple512/framework)](./LICENSE)
 
 > `One Framework`，一个基础设施框架
@@ -19,11 +19,11 @@
 
 ## 项目
 
-| 名称               | 描述                       | 版本                                                                                                                               | 下载量                                                     |
-| ------------------ | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `OneF.Utilityable` | 包含一些常用的方法         | [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Utilityable)](https://www.nuget.org/packages/OneF.Utilityable) | ![Nuget](https://img.shields.io/nuget/dt/OneF.Utilityable) |
-| `OneF.Moduleable`  | 为项目提供模块化功能       | [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Moduleable)](https://www.nuget.org/packages/OneF.Moduleable)   | ![Nuget](https://img.shields.io/nuget/dt/OneF.Moduleable)  |
-| `OneF.Eventable`   | 提供本地事件发布、触发功能 | [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Eventable)](https://www.nuget.org/packages/OneF.Eventable)     | ![Nuget](https://img.shields.io/nuget/dt/OneF.Eventable)   |
+| 名称               | 描述                       | 版本                                                                                                                                                        | 下载量                                                     |
+| ------------------ | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `OneF.Utilityable` | 包含一些常用的方法         | [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Utilityable?label=version&color=blue)](https://www.nuget.org/packages/OneF.Utilityable) | ![Nuget](https://img.shields.io/nuget/dt/OneF.Utilityable) |
+| `OneF.Moduleable`  | 为项目提供模块化功能       | [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Moduleable?label=version&color=blue)](https://www.nuget.org/packages/OneF.Moduleable)   | ![Nuget](https://img.shields.io/nuget/dt/OneF.Moduleable)  |
+| `OneF.Eventable`   | 提供本地事件发布、触发功能 | [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/OneF.Eventable?label=version&color=blue)](https://www.nuget.org/packages/OneF.Eventable)     | ![Nuget](https://img.shields.io/nuget/dt/OneF.Eventable)   |
 
 ## 参考
 
