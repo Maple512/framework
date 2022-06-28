@@ -13,6 +13,7 @@
 // limitations under the License.
 
 namespace OneF.Domainable.Entities;
+
 public interface IUser
 {
     IUserId Id { get; }

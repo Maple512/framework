@@ -15,23 +15,28 @@
 namespace OneF.Eventable;
 
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 public interface IEventHandler<in TEventData> : IEventHandler
     where TEventData : IEventData
 {
-    int? Order { get; }
+    Task HandlerAsync(TEventData data, CancellationToken cancellationToken = default);
+}
 
-    Task HandlerAsync(TEventData data);
+public interface IEventHandler<in TEventData, TEventResult> : IEventHandler
+{
+    Task<TEventResult> HandlerAsync(TEventData eventData, CancellationToken cancellationToken = default);
 }
 
 /// <summary>
-/// 时间处理器
+/// 事件处理器
 /// <para>注意：请不要继承这个接口！！！，请使用<see cref="IEventHandler{TEventData}"/>泛型接口</para>
 /// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public interface IEventHandler
 {
+    int? Order { get; }
 }
 
 public abstract class EventHandlerBase<TEventData> : IEventHandler<TEventData>
@@ -39,5 +44,13 @@ public abstract class EventHandlerBase<TEventData> : IEventHandler<TEventData>
 {
     public int? Order { get; }
 
-    public abstract Task HandlerAsync(TEventData data);
+    public abstract Task HandlerAsync(TEventData data, CancellationToken cancellationToken = default);
+}
+
+public abstract class EventHandlerBase<TEventData, TEventResult> : IEventHandler<TEventData, TEventResult>
+    where TEventData : IEventData
+{
+    public int? Order { get; }
+
+    public abstract Task<TEventResult> HandlerAsync(TEventData data, CancellationToken cancellationToken = default);
 }

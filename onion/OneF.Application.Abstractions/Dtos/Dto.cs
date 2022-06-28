@@ -12,26 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Eventable.Fakes;
+namespace OneF.Application.Dtos;
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using OneF.Moduleable.DependencyInjection;
+using System.Reflection;
 
-public class DelayEvent : EventDataBase
+public interface IDto { }
+
+public interface IDto<TId> : IDto
+    where TId : notnull
 {
-    public DelayEvent(long id) : base(id)
-    {
-    }
-
-    public TimeSpan Delay { get; set; }
+    TId Id { get; init; }
 }
 
-public class DelayEventHandler : EventHandlerBase<DelayEvent>, ITransientService
+[Serializable]
+public class Dto : IDto
 {
-    public override async Task HandlerAsync(DelayEvent data, CancellationToken cancellationToken = default)
+    public override string ToString()
     {
-        await Task.Delay(data.Delay);
+        return $"DTO: {GetType().GetShortDisplayName()}";
+    }
+}
+
+[Serializable]
+public class Dto<TId> : Dto, IDto<TId>
+    where TId : notnull
+{
+    public TId Id { get; init; }
+
+    public override string ToString()
+    {
+        return $"DTO: {GetType().GetShortDisplayName()}, {nameof(Id)}: {Id}";
     }
 }

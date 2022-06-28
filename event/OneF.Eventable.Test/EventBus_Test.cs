@@ -14,9 +14,6 @@
 
 namespace OneF.Eventable;
 
-using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using OneF.Eventable.Fakes;
 using Shouldly;
@@ -47,27 +44,18 @@ public class EventBus_Test : EventableTestBase
         Should.NotThrow(async () => await _eventBus.PublishAsync(new SendMessageEvent(msg)));
     }
 
-    [Fact]
-    public void Trigger_paralle_event()
+    [Theory]
+    [InlineData(100)]
+    public async Task Trigger_event_callback(int num)
     {
-        var msg = nameof(SendMessageEvent);
-
-        foreach(var index in Enumerable.Range(0, 100))
+        var eventData = new AutoincrementEvent
         {
-            Should.NotThrow(async () => await _eventBus.PublishAsync(new SendMessageEvent(msg), new ParallelOptions
-            {
-                MaxDegreeOfParallelism = 30,
-            }));
+            Number = num,
+        };
+
+        await foreach(var item in _eventBus.PublishAsync<AutoincrementEvent, int>(eventData))
+        {
+            item.ShouldBe(++num);
         }
-    }
-
-    [Fact]
-    public async void Trigger_event_with_delay()
-    {
-        var source = new CancellationTokenSource(TimeSpan.FromSeconds(1));
-
-        _ = await Should.ThrowAsync<TaskCanceledException>(async () => await _eventBus.PublishAsync(
-            new DelayEvent(1) { Delay = TimeSpan.FromSeconds(3) },
-            new ParallelOptions { CancellationToken = source.Token }));
     }
 }

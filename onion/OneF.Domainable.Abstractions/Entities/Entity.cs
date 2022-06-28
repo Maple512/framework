@@ -44,11 +44,8 @@ public class Entity<TId> : Entity, IEquatable<Entity<TId>>
         Id = id;
     }
 
-    /// <summary>
-    /// 唯一ID
-    /// </summary>
     [Key]
-    public TId Id { get; set; }
+    public virtual TId Id { get; }
 
     public bool Equals(Entity<TId>? other)
     {

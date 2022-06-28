@@ -32,13 +32,15 @@ public abstract class OneFModuleTestBase<TStartup>
     {
         var services = new ServiceCollection();
 
-        ConfigureServices(services);
-
         Configuration = services.ConfigureServices<TStartup>(ConfigureConfiguration);
 
-        ServiceProvider = services.BuildServiceProviderFromFactory();
+        ConfigureServices(services);
+
+        ServiceProvider = services.BuildServiceProvider();
 
         _ = ServiceProvider.ConfigureAsync().AsTask().GetAwaiter().GetResult();
+
+        Initialize();
     }
 
     protected IServiceProvider ServiceProvider { get; }
@@ -48,7 +50,7 @@ public abstract class OneFModuleTestBase<TStartup>
     protected ILogger Logger => ServiceProvider.GetRequiredService<ILogger<TStartup>>();
 
     /// <summary>
-    /// 服务容器
+    /// 服务配置
     /// </summary>
     /// <param name="services"></param>
     protected virtual void ConfigureServices(IServiceCollection services)
@@ -66,6 +68,11 @@ public abstract class OneFModuleTestBase<TStartup>
     protected virtual void ConfigureConfiguration(IConfigurationBuilder builder)
     {
     }
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    protected virtual void Initialize() { }
 
     protected IEnumerable<T> GetServices<T>()
     {

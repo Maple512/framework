@@ -14,6 +14,8 @@
 
 namespace OneF.Eventable;
 
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 public interface IEventBus
@@ -24,17 +26,17 @@ public interface IEventBus
     /// <typeparam name="TEventData"></typeparam>
     /// <param name="data"></param>
     /// <returns></returns>
-    ValueTask PublishAsync<TEventData>(TEventData data)
+    ValueTask PublishAsync<TEventData>(TEventData data, CancellationToken cancellationToken = default)
         where TEventData : IEventData;
 
     /// <summary>
-    /// 发布事件（并发执行事件处理程序）
+    /// 发布事件
     /// </summary>
     /// <typeparam name="TEventData"></typeparam>
+    /// <typeparam name="TEventResult"></typeparam>
     /// <param name="data"></param>
-    /// <param name="parallelOptions"><see cref="Parallel"/> 中的参数</param>
     /// <returns></returns>
-    ValueTask PublishAsync<TEventData>(TEventData data, ParallelOptions? parallelOptions = null)
+    IAsyncEnumerable<TEventResult> PublishAsync<TEventData, TEventResult>(TEventData data, CancellationToken cancellationToken = default)
         where TEventData : IEventData;
 
     /// <summary>

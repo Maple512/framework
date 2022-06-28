@@ -6,8 +6,4 @@
         <TargetFramework>$(NetFramework)</TargetFramework>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\infrastructure\OneF.Utilityable\OneF.Utilityable.csproj" />
-    </ItemGroup>
-
 </Project>

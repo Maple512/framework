@@ -12,26 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Eventable.Fakes;
+namespace OneF.DataAccessable;
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using OneF.Moduleable.DependencyInjection;
+using System.Data.Common;
 
-public class DelayEvent : EventDataBase
+public interface ISqlConnectionFatory
 {
-    public DelayEvent(long id) : base(id)
-    {
-    }
-
-    public TimeSpan Delay { get; set; }
-}
-
-public class DelayEventHandler : EventHandlerBase<DelayEvent>, ITransientService
-{
-    public override async Task HandlerAsync(DelayEvent data, CancellationToken cancellationToken = default)
-    {
-        await Task.Delay(data.Delay);
-    }
+    DbConnection CreateConnection();
 }

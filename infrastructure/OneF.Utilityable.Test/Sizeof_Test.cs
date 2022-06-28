@@ -15,6 +15,8 @@
 namespace OneF;
 
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Shouldly;
 using Xunit;
@@ -69,6 +71,10 @@ public unsafe class Sizeof_Test
         sizeof(TimeOnly).ShouldBe(8);
 
         sizeof(DateTimeOffset).ShouldBe(16);
+
+        Unsafe.SizeOf<Type>().ShouldBe(8);
+
+        Unsafe.SizeOf<TypeInfo>().ShouldBe(8);
     }
 
     public struct MultiStruct

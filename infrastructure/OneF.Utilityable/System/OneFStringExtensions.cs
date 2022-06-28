@@ -16,6 +16,7 @@ namespace System;
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 using System.Text;
 
 [StackTraceHidden]
@@ -159,6 +160,18 @@ public static class OneFStringExtensions
     }
 
     #endregion char case
+
+    public static string ToMD5Hash(this string? data)
+    {
+        if(data.IsNullOrWhiteSpace())
+        {
+            return string.Empty;
+        }
+
+        var value = MD5.HashData(Encoding.UTF8.GetBytes(data!));
+
+        return Convert.ToHexString(value);
+    }
 
     private enum SnakeCaseState
     {

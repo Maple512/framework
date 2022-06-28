@@ -14,6 +14,9 @@
 
 namespace OneF.Domainable.Fakes;
 
+using System;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OneF.Domainable.Entities;
 
 public readonly record struct UserId(long Key) : IUserId
@@ -31,5 +34,24 @@ public readonly record struct UserId(long Key) : IUserId
     public override string ToString()
     {
         return $"{Key}";
+    }
+}
+
+public class UserIdConverter : ValueConverter<IUserId, long>
+{
+    public UserIdConverter(ConverterMappingHints? mappingHints = null)
+        : base(ToLong(), ToUserId(), mappingHints)
+    {
+
+    }
+
+    private static Expression<Func<IUserId, long>> ToLong()
+    {
+        return static (IUserId id) => (long)(UserId)id;
+    }
+
+    private static Expression<Func<long, IUserId>> ToUserId()
+    {
+        return static (long id) => (UserId)id;
     }
 }

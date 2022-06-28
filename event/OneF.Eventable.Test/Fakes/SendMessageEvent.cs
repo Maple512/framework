@@ -14,6 +14,13 @@
 
 namespace OneF.Eventable.Fakes;
 
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using OneF.Moduleable.DependencyInjection;
+using Shouldly;
+
 public class SendMessageEvent : IEventData
 {
     public SendMessageEvent(string message)
@@ -22,4 +29,40 @@ public class SendMessageEvent : IEventData
     }
 
     public string Message { get; }
+}
+
+public class SendMessageHandler1 : EventHandlerBase<SendMessageEvent>, ITransientService
+{
+    public override Task HandlerAsync(SendMessageEvent data, CancellationToken cancellationToken = default)
+    {
+        data.Message.ShouldNotBeNullOrEmpty();
+
+        Debug.WriteLine($"1: {DateTime.Now:mm:ss.fffffff}");
+
+        return Task.CompletedTask;
+    }
+}
+
+public class SendMessageHandler2 : EventHandlerBase<SendMessageEvent>, ITransientService
+{
+    public override Task HandlerAsync(SendMessageEvent data, CancellationToken cancellationToken = default)
+    {
+        data.Message.ShouldNotBeNullOrEmpty();
+
+        Debug.WriteLine($"2: {DateTime.Now:mm:ss.fffffff}");
+
+        return Task.CompletedTask;
+    }
+}
+
+public class SendMessageHandler3 : EventHandlerBase<SendMessageEvent>, ITransientService
+{
+    public override Task HandlerAsync(SendMessageEvent data, CancellationToken cancellationToken = default)
+    {
+        data.Message.ShouldNotBeNullOrEmpty();
+
+        Debug.WriteLine($"3: {DateTime.Now:mm:ss.fffffff}");
+
+        return Task.CompletedTask;
+    }
 }

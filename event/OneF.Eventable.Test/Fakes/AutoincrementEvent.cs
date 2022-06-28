@@ -14,24 +14,21 @@
 
 namespace OneF.Eventable.Fakes;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using OneF.Moduleable.DependencyInjection;
 
-public class DelayEvent : EventDataBase
+public class AutoincrementEvent : IEventData
 {
-    public DelayEvent(long id) : base(id)
-    {
-    }
-
-    public TimeSpan Delay { get; set; }
+    public int Number { get; init; }
 }
 
-public class DelayEventHandler : EventHandlerBase<DelayEvent>, ITransientService
+public class AutoincrementEventHandler : EventHandlerBase<AutoincrementEvent, int>, ITransientService
 {
-    public override async Task HandlerAsync(DelayEvent data, CancellationToken cancellationToken = default)
+    public override Task<int> HandlerAsync(AutoincrementEvent data, CancellationToken cancellationToken = default)
     {
-        await Task.Delay(data.Delay);
+        var number = data.Number;
+
+        return Task.FromResult(++number);
     }
 }

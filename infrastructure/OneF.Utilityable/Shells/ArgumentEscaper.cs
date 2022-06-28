@@ -150,7 +150,7 @@ public static class ArgumentEscaper
                 // Escape any preceding backslashes and the quote
                 else if(argument[i] == '"')
                 {
-                    content.Append('\\', 2 * backslashCount + 1);
+                    content.Append('\\', (2 * backslashCount) + 1);
                     content.Append('"');
                 }
 

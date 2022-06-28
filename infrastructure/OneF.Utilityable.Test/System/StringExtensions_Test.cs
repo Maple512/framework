@@ -41,6 +41,16 @@ public class StringExtensions_Test
         "aBCD".ToSnakeCase().ShouldBeEquivalentTo("a_bcd");
     }
 
+    [Fact]
+    public void To_md5_hash()
+    {
+        var value = "阿克苏的发生地佛i就235a4sdf6a51sdf6@ii💟💢🛐☯❣(～￣▽￣)～<(￣︶￣)↗[GO!]`(*>﹏<*)′₩㎡₦☸☏♅";
+
+        var hash = value.ToMD5Hash();
+
+        hash.ShouldBe("9D6A003F82D26D9B107C05B42AABD9F0");
+    }
+
     //// base32: https://gist.github.com/erdomke/9335c394c5cc65404c4cf9aceab04143
     //// base64: https://zhuanlan.zhihu.com/p/339477329
     //public static string ToBase64String(ReadOnlySpan<byte> bytes, Base64FormattingOptions options = Base64FormattingOptions.None)

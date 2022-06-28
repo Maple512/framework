@@ -20,7 +20,7 @@ public class User : Entity<IUserId>, IUser
 {
     private User() { }
 
-    public User(long id, string name, string? displayName = null) : base(new UserId(id))
+    public User(UserId id, string name, string? displayName = null) : base(id)
     {
         Name = Check.NotNullOrWhiteSpace(name);
 

@@ -12,26 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace OneF.Eventable.Fakes;
+namespace OneF.Application.Dtos;
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using OneF.Moduleable.DependencyInjection;
+using System.Collections.Generic;
 
-public class DelayEvent : EventDataBase
+public interface IPagedResult<T> : IListOUT<T>
+    where T : notnull
 {
-    public DelayEvent(long id) : base(id)
-    {
-    }
-
-    public TimeSpan Delay { get; set; }
+    long Total { get; }
 }
 
-public class DelayEventHandler : EventHandlerBase<DelayEvent>, ITransientService
+[Serializable]
+public class PagedOUT<T> : ListOUT<T>, IPagedResult<T>
+    where T : notnull
 {
-    public override async Task HandlerAsync(DelayEvent data, CancellationToken cancellationToken = default)
+    public PagedOUT()
     {
-        await Task.Delay(data.Delay);
     }
+
+    public PagedOUT(long total, IReadOnlyList<T> data) : base(data)
+    {
+        Total = total;
+    }
+
+    public long Total { get; }
 }
